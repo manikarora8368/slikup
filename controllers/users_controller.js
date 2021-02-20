@@ -1,3 +1,3 @@
 module.exports.profile = function(req,res){
-    return res.end('Profile is Up!!!');
+    return res.render('user_profile');
 }
