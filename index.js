@@ -2,9 +2,11 @@ const express = require('express');
 const port = 8000;
 const app = express();
 const expressLayouts = require('express-ejs-layouts');
-
+const cookieParser = require('cookie-parser');
+const db = require('./config/mongoose');
+app.use(express.urlencoded());
 app.use(express.static('./assets'));
-
+app.use(cookieParser());
 // always put this above routes
 app.use(expressLayouts);
 // extract styles and scripts from the sub-pages in the layout
