@@ -1,5 +1,7 @@
 module.exports.profile = function(req,res){
-    return res.render('user_profile');
+    return res.render('user_profile',{
+        title: 'slikup'
+    });
 }
 const user = require('../models/user');
 module.exports.signup =function(req,res){
@@ -20,7 +22,7 @@ module.exports.signupNew = function(req , res){
         if(!User){
             user.create(req.body , function(err , user){
                 if(err){console.log('error in creating the user'); return;}
-
+                console.log(user);
                 return res.redirect('/signin');
             })
         }
@@ -29,5 +31,5 @@ module.exports.signupNew = function(req , res){
 }
 
 module.exports.signinLogin = function(req,res){
- 
+ return res.redirect('/users/profile');
 }
