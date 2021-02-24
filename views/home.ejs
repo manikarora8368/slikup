@@ -11,4 +11,14 @@
             <button type="submit">Post</button>
         </form>
     </section>
+    <section>
+        <ul>
+            <%for(i of Posts){%>
+                <li>
+                    <%=i.content%>
+                    <%=i.user.name%>
+                </li>
+            <%}%>
+        </ul>
+    </section>
 
