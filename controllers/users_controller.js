@@ -5,11 +5,20 @@ module.exports.profile = function(req,res){
 }
 const user = require('../models/user');
 module.exports.signup =function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/');
+    }
+    else{
     return res.render('signup' , {
         title : "Slikup"
     })
+    }
+    
 }
 module.exports.signin =function(req,res){
+    if(req.isAuthenticated()){
+        return res.redirect('/');
+    }   
     return res.render('signin' , {
         title : "Slikup"
     })
@@ -20,10 +29,10 @@ module.exports.signupNew = function(req , res){
         if(err){console.log('error in finding the user in sign up') ; return;}
 
         if(!User){
-            user.create(req.body , function(err , user){
+            user.create(req.body , function(err , User){
                 if(err){console.log('error in creating the user'); return;}
-                console.log(user);
-                return res.redirect('/signin');
+                console.log(User);
+                return res.redirect('/users/signin');
             })
         }
     })
@@ -31,5 +40,10 @@ module.exports.signupNew = function(req , res){
 }
 
 module.exports.signinLogin = function(req,res){
- return res.redirect('/users/profile');
+ return res.redirect('/');
+}
+
+module.exports.signout = function(req, res){
+    req.logout();
+    return  res.redirect('/');
 }
