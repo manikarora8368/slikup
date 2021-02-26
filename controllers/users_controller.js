@@ -7,8 +7,18 @@ module.exports.profile = function(req,res){
         profile_user:user
     });
     })
-
 }
+
+module.exports.update = function(req ,res){
+    if(req.user.id == req.params.id){
+        user.findByIdAndUpdate(req.params.id,req.body , function(err ,user){
+            return res.redirect('back');
+        })
+    }else{
+        return res.status(401).send('unauthorized');
+    }
+}
+
 module.exports.signup =function(req,res){
     if(req.isAuthenticated()){
         return res.redirect('/');
@@ -45,20 +55,12 @@ module.exports.signupNew = function(req , res){
 }
 
 module.exports.signinLogin = function(req,res){
- return res.redirect('/');
+    req.flash('success' , 'Logged in successfuly ');
+    return res.redirect('/');
 }
 
 module.exports.signout = function(req, res){
     req.logout();
+    req.flash('success' , 'Logged out successfuly ');
     return  res.redirect('/');
-}
-
-module.exports.update = function(req ,res){
-    if(req.user.id == req.params.id){
-        user.findByIdAndUpdate(req.params.id,req.body , function(err ,user){
-            return res.redirect('back');
-        })
-    }else{
-        return res.status(401).send('unauthorized');
-    }
 }

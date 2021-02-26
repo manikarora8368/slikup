@@ -1,7 +1,7 @@
 const posts = require('../models/post');
 const User = require('../models/user');
 
-module.exports.home = function(req,res){
+module.exports.home = async function(req,res){
     // console.log(req.cookies);
     // res.cookie('user_id' , 25);
     // posts.find({},function(err , post){
@@ -12,7 +12,9 @@ module.exports.home = function(req,res){
     // })
     // });
 // populate the user for each post
-    posts.find({})
+    // normal way of writing the create function
+
+    /*posts.find({})
     .populate('user')
     .populate({
         path : 'comments',
@@ -33,5 +35,29 @@ module.exports.home = function(req,res){
         })
 
     });
+*/
+    //async way of writing the function
 
+    try{
+    let post =await posts.find({})
+    .populate('user')
+    .populate({
+        path : 'comments',
+        populate:{
+            path: 'user'
+        }
+    });
+
+    let users = await User.find({});
+
+    return res.render('home' , {
+            title : "Slikup",
+            Posts: post,
+            all_users: users
+    })
+
+    }catch(err){
+        console.log('error is' , err);
+        return;
+    }
 }
