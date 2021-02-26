@@ -14,11 +14,17 @@
     <section>
         <ul>
             <%for(i of Posts){%>
-                <li>
-                    <%=i.content%>
-                    <%=i.user.name%>
-                </li>
+            <%- include('_post.ejs');%>
             <%}%>
         </ul>
+    </section>
+    <section id="user-friends">
+        <h4>Friends</h4>
+        <%for(i of all_users){%>
+            <p>
+                <a href="/users/profile/<%=i.id%>"><%=i.name%></a>
+            </p>
+        <%}%>
+
     </section>
 

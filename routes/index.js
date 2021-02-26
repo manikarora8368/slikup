@@ -6,7 +6,7 @@ const userController = require('../controllers/users_controller');
 const homeController = require('../controllers/home_controller');
 router.use('/users', require('./users'));
 router.use('/posts', require('./posts'));
-
+router.use('/comments', require('./comments'));
 router.get('/' , homeController.home);
 
 module.exports = router;
