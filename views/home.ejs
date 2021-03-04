@@ -11,8 +11,9 @@
             <button type="submit">Post</button>
         </form>
     </section>
-    <section>
+    <section id="post-list-container">
         <ul>
+            <%console.log(Posts)%>
             <%for(i of Posts){%>
             <%- include('_post.ejs');%>
             <%}%>
@@ -27,4 +28,5 @@
         <%}%>
 
     </section>
+    <script src="/js/home_post.js"></script>
 

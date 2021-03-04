@@ -9,7 +9,7 @@ module.exports.createPost =async function(req , res){
         if(err){console.log('error in creating the post'); return;}
         return res.redirect('back');
     })*/
-    try{
+    /*try{
     let create = await Post.create({
         content: req.body.content,
         user: req.user._id
@@ -18,11 +18,32 @@ module.exports.createPost =async function(req , res){
     }catch(err){
         console.log('error' , err);
         return;
+    }*/
+
+    // through ajax method..............
+    try{
+    let create = await Post.create({
+        content: req.body.content,
+        user: req.user._id
+    });
+
+    if(req.xhr){
+        return res.status(200).json({
+            data: {
+                post: create
+            },
+            message: "post created successfuly"
+        })
+    }
+    return res.redirect('back');
+    }catch(err){
+        console.log('error' , err);
+        return;
     }
 
 }
 
-module.exports.destroy= async function(req ,res){
+// module.exports.destroy= async function(req ,res){
     /*Post.findById(req.params.id , function(err , post){
         if(post){
             if(post.user == req.user.id){
@@ -36,18 +57,58 @@ module.exports.destroy= async function(req ,res){
             }
         }
     })*/
-    try{
-        let post =await Post.findById(req.params.id);
-            if(post.user == req.user.id){
-                post.remove();
-                await Comment.deleteMany({post: req.params.id});
-                return res.redirect('back');
-            }else{
-                return res.redirect('back');
-            }
-    }catch(err){
-        console.log('error' , err);
-        return;
-    }
+//     try{
+//         let post =await Post.findById(req.params.id);
+//             if(post.user == req.user.id){
+//                 post.remove();
+//                 await Comment.deleteMany({post: req.params.id});
 
+//                 if(req.xhr){
+//                     return res.status(200).json({
+//                         data: {
+//                             post_id: req.params.id
+//                         },
+//                         message: 'post deleted successfuly'
+//                     })
+//                 }
+//                 return res.redirect('back');
+//             }else{
+//                 return res.redirect('back');
+//             }
+//     }catch(err){
+//         console.log('error' , err);
+//         return;
+//     }
+
+// }
+module.exports.destroy = async function(req, res){
+
+    try{
+        let post = await Post.findById(req.params.id);
+
+        if (post.user == req.user.id){
+            post.remove();
+            await Comment.deleteMany({post: req.params.id});
+            if (req.xhr){
+                return res.status(200).json({
+                    data: {
+                        post_id: req.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
+
+            req.flash('success', 'Post and associated comments deleted!');
+
+            return res.redirect('back');
+        }else{
+            req.flash('error', 'You cannot delete this post!');
+            return res.redirect('back');
+        }
+
+    }catch(err){
+        req.flash('error', err);
+        return res.redirect('back');
+    }
+    
 }

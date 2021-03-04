@@ -6,7 +6,10 @@ const expressLayouts = require('express-ejs-layouts');
 const db = require('./config/mongoose');
 const session = require('express-session');
 const passport = require('passport');
+const path = require('path')
 const passportLocal = require('./config/passport-local-strategy');
+const passportJWT = require('./config/passport-jwt-strategy');
+const passportGoogle = require('./config/passport-google-oauth-strategy');
 const MongoStore = require('connect-mongo')(session);
 const sassMiddleware = require('node-sass-middleware');
 const flash = require('connect-flash');
@@ -23,7 +26,8 @@ app.use(sassMiddleware({
 app.use(express.urlencoded());
 app.use(cookieParser());
 app.use(express.static('./assets'));
-
+// makes the upload path available to the browser
+app.use('/uploads',express.static(__dirname +'/uploads'));
 
 
 // always put this above routes
