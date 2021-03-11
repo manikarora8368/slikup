@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/slikup_development');
+const env = require('../config/environment');
+mongoose.connect(`mongodb://localhost/${env.db}`);
 
 const db = mongoose.connection;
 

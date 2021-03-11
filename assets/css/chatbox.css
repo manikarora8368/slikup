@@ -1,0 +1,8 @@
+#user-chat-box ul {
+  list-style: none; }
+
+#user-chat-box .self-message {
+  text-align: right; }
+
+#user-chat-box .other-message {
+  text-align: left; }

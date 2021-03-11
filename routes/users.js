@@ -21,6 +21,12 @@ router.get('/signout' , userController.signout);
 
 router.get('/auth/google', passport.authenticate('google', {scope:['profile' , 'email']}));
 
+router.get('/forget-password',userController.forgetPass);
+router.post('/forget-pass',userController.ResetPass);
+// router.get('/reset-password/?accessToken=value', userController.updatePassScreen);
+router.get('/reset-password/',userController.updatePassScreen);
+router.post('/reset-password',userController.UpdatePassword);
+
 router.get('/auth/google/callback' , passport.authenticate('google', {failureRedirect: '/users/signin'}),userController.signinLogin);
 
 module.exports = router;

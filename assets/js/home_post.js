@@ -16,6 +16,7 @@
                     console.log(a.prop('href'));
                     console.log(a);
                     deletePost($(' .delete-post-button', newPost));
+                    new ToggleLike($(' .toggle-like-button',newPost));
                 }, error: function(error){
                     console.log(error.responseText);
                 }
@@ -30,6 +31,14 @@
                 <small><a class="delete-post-button" href="/posts/destroy/${post._id}>">Delete Post</a></small>
                 ${post.content}
                 ${post.user.name}
+                <br>
+                <small>
+                            
+                    <a class="toggle-like-button" data-likes="0" href="/likes/toggle/?id=${post._id}&type=Post">
+                        0 Likes
+                    </a>
+                            
+                </small>
                 <div class="post-comment">
                 <form action="/comments/add_comment" method="POST">
                     <input type="text" name="content" placeholder="Add comment here.." required>

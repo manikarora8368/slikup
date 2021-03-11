@@ -1,0 +1,13 @@
+<h2>Reset password</h2>
+<form action="/users/reset-password" method="POST">
+<input type="password" name="password" placeholder="Enter your new password">
+<input type="hidden" value="" name="accessToken">
+<button type="submit">Submit</button>
+</form>
+
+<script type="text/javascript">
+    const queryString =  window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const accessToken = urlParams.get('accessToken');
+    document.getElementsByName("accessToken")[0].value =accessToken;
+</script>

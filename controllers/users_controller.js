@@ -1,7 +1,9 @@
-//const { findById } = require('../models/user');
 const user = require('../models/user');
 const fs =require('fs');
 const path =require('path');
+const ResetPass = require('../models/resetPass');
+const crypto = require('crypto');
+const ResetPassMailer = require('../mailers/reset_pass_mailer');
 
 module.exports.profile = function(req,res){
     
@@ -94,4 +96,47 @@ module.exports.signout = function(req, res){
     req.logout();
     req.flash('success' , 'Logged out successfuly ');
     return  res.redirect('/');
+}
+
+
+module.exports.forgetPass = function(req , res){
+    return res.render('forget-pass',{
+        title: 'slikup',
+    });
+}
+module.exports.updatePassScreen = function(req,res){
+    return res.render('reset_pass',{
+        title: 'slikup',
+    });
+}
+
+module.exports.ResetPass =async function(req ,res){
+     let User= await user.findOne({username: req.body.email});
+     console.log(req.body.email);
+     console.log(User);
+     if(!User){
+        return res.redirect('back');
+     }else{
+         let accessToken = crypto.randomBytes(20).toString('hex');
+        //  console.log(User.id);
+        //  console.log(accessToken);
+         ResetPass.create({
+             user: User.id,
+             accessToken: accessToken
+         },function(err,ResetPass){
+             if(err){console.log('error in making reset pass user'); return;}
+            ResetPassMailer.resetpass(ResetPass.populate('User'));
+            return res.redirect('/users/signin');
+         });
+
+     }
+}
+
+module.exports.UpdatePassword = function(req,res){
+    console.log('inside update pass');
+    console.log(req.body.password);
+    console.log(req.body.accessToken);
+    return;
+    // ResetPass.findOneAndUpdate({accessToken: req.body.})
+
 }
