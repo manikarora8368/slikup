@@ -1,50 +1,46 @@
-    <link rel="stylesheet" href="<%=assetPath('css\home.css')%>">
-    <div>
-    <h1>
-        This is slikup
-    </h1>
-    </div>
-    <section id="new-postArea">
-        <h3>Posts</h3>
-        <form action="/posts/create_post" id="new-post-form" method="POST">
-            <textarea name="content" cols="30" rows="3"></textarea>
-            <button type="submit">Post</button>
-        </form>
-    </section>
-    <section id="post-list-container">
-        <ul>
-            <%console.log(Posts)%>
-            <%for(i of Posts){%>
-            <%- include('_post.ejs');%>
-            <%}%>
-        </ul>
-    </section>
-    <section id="user-friends">
-        <h4>Friends</h4>
-        <%for(i of all_users){%>
-            <p>
-                <a href="/users/profile/<%=i.id%>"><%=i.name%></a>
-            </p>
-        <%}%>
-
-    </section>
-    <div id="chatbox"><%- include('_chatbox.ejs');%></div>
-    <script src="/js/home_post.js"></script>
-
-    <script src="js/toggle_likes.js"></script>
-    <script>
-        $('.toggle-like-button').each(function(){
-            let self = this;
-            let toggleLike = new ToggleLike(self);
-        })
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.2/socket.io.js"
-        integrity="sha512-YybopSVjZU0fe8TY4YDuQbP5bhwpGBE/T6eBUEZ0usM72IWBfWrgVI13qfX4V2A/W7Hdqnm7PIOYOwP9YHnICw=="
-        crossorigin="anonymous"></script>
-    <script src="/js/chat_engine.js"></script>
-    <%if(locals.user){%>
-        <script>
-            new ChatEngine('user-chat-box', '<%=locals.user.username%>')
-        </script>
+<link rel="stylesheet" href="<%=assetPath('css\home.css')%>" />
+<div>
+  <h1>This is slikup</h1>
+</div>
+<section id="new-postArea">
+  <h3>Posts</h3>
+  <form action="/posts/create_post" id="new-post-form" method="POST">
+    <textarea name="content" cols="30" rows="3"></textarea>
+    <button type="submit">Post</button>
+  </form>
+</section>
+<section id="post-list-container">
+  <ul>
+    <%console.log(Posts)%> <%for(i of Posts){%> <%- include('_post.ejs');%>
     <%}%>
-    
+  </ul>
+</section>
+<section id="user-friends">
+  <h4>Friends</h4>
+  <%for(i of all_users){%>
+  <p>
+    <a href="/users/profile/<%=i.id%>"><%=i.name%></a>
+  </p>
+  <%}%>
+</section>
+<div id="chatbox"><%- include('_chatbox.ejs')%></div>
+<script src="<%=assetPath('js/home_post.js')%>"></script>
+
+<script src="<%=assetPath('js/toggle_likes.js')%>"></script>
+<script>
+  $(".toggle-like-button").each(function () {
+    let self = this;
+    let toggleLike = new ToggleLike(self);
+  });
+</script>
+<script
+  src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/3.1.2/socket.io.js"
+  integrity="sha512-YybopSVjZU0fe8TY4YDuQbP5bhwpGBE/T6eBUEZ0usM72IWBfWrgVI13qfX4V2A/W7Hdqnm7PIOYOwP9YHnICw=="
+  crossorigin="anonymous"
+></script>
+<script src="<%=assetPath('js/chat_engine.js')%>"></script>
+<%if(locals.user){%>
+<script>
+  new ChatEngine("user-chat-box", "<%=locals.user.username%>");
+</script>
+<%}%>

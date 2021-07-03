@@ -6,20 +6,20 @@ module.exports.toggleLike =async function(req,res){
     try{
         let likeable;
         let deleted =false;
-        console.log(req.query.type);
+        // console.log(req.query.type);
         if(req.query.type == 'Post'){
             likeable = await Post.findById(req.query.id).populate('likes');
         }else{
             likeable = await Comment.findById(req.query.id).populate('likes');
         }
-        console.log(likeable);
+        // console.log(likeable);
         // check if a like already exists
         let existingLike =await Like.findOne({
             likeable: req.query.id,
             onModel: req.query.type,
             user: req.user._id
         });
-        console.log(existingLike);
+        // console.log(existingLike);
         // if a like already exists then delete it
         if(existingLike){
             likeable.likes.pull(existingLike._id);
@@ -37,12 +37,13 @@ module.exports.toggleLike =async function(req,res){
             likeable.likes.push(newLike._id);
             likeable.save();
         }
-        return res.json(200 ,{
-            message: "request successful",
-            data:{
-                deleted: deleted
-            }
-        })
+        return res.redirect('back');
+        //  res.json(200 ,{
+        //     message: "request successful",
+        //     data:{
+        //         deleted: deleted
+        //     }
+        // })
 
     }catch(err){
         console.log(err);

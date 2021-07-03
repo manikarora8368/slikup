@@ -1,31 +1,39 @@
 <li id="post-<%=i._id%>">
-<%if(locals.user && locals.user.id==i.user.id){%>
-    <small><a class="delete-post-button" href="/posts/destroy/<%= i.id%>">Delete Post</a></small>
-<%}%>
-    <%=i.content%>
-        <%=i.user.name%>
-        <br>
-        <small>
-            <% if(locals.user){%>
-                <a class="toggle-like-button" data-likes="<%=i.likes.length%>" href="/likes/toggle/?id=<%=i._id%>&type=Post">
-                    <%=i.likes.length%> Likes
-                </a>
-            <%}else{%>
-                <%=i.likes.length%> Likes
-            <%}%>
-        </small>
-            <div class="post-comment">
-                <form action="/comments/add_comment" method="POST">
-                    <input type="text" name="content" placeholder="Add comment here.." required>
-                    <input type="hidden" name="post" value="<%=i._id%>">
-                    <button type="submit">Add comment</button>
-                </form>
-                <div id="post-comments-list">
-                    <ul>
-                        <%for(comment of i.comments){%>
-                            <%- include('_comment.ejs');%>
-                        <%}%>
-                        </ul>
-                    </div>
-            </div>
+  <%if(locals.user && locals.user.id==i.user.id){%>
+  <small
+    ><a class="delete-post-button" href="/posts/destroy/<%= i.id%>"
+      >Delete Post</a
+    ></small
+  >
+  <%}%>
+   <%=i.content%> <%=i.user.name%>
+  <br />
+  <small>
+    <% if(locals.user){%>
+    <a
+      class="toggle-like-button"
+      data-likes="<%=i.likes.length%>"
+      href="/likes/toggle/?id=<%=i._id%>&type=Post"
+    >
+      <%=i.likes.length%> Likes
+    </a>
+    <%}else{%> <%=i.likes.length%> Likes <%}%>
+  </small>
+  <div class="post-comment">
+    <form action="/comments/add_comment" method="POST">
+      <input
+        type="text"
+        name="content"
+        placeholder="Add comment here.."
+        required
+      />
+      <input type="hidden" name="post" value="<%=i._id%>" />
+      <button type="submit">Add comment</button>
+    </form>
+    <div id="post-comments-list">
+      <ul>
+        <%for(comment of i.comments){%> <%- include('_comment.ejs');%> <%}%>
+      </ul>
+    </div>
+  </div>
 </li>

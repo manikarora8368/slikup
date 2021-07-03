@@ -1,22 +1,23 @@
-    <h1>
-        Slikup/profile
-    </h1>
+<h1>
+    Slikup/profile
+</h1>
 
-    <img src="<%= profile_user.avatar %>" alt="Unable to display the image" width="100">
+<img src="<%= profile_user.avatar %>" alt="Unable to display the image" width="100">
 
-    <%if(locals.user.id == profile_user.id){%>
-        <!-- if user matches then show the form else show the profile info -->
-        <form action="/users/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
+<%if(locals.user.id==profile_user.id){%>
+    <!-- if user matches then show the form else show the profile info -->
+    <form action="/users/update/<%=profile_user.id%>" enctype="multipart/form-data" method="POST">
         <input type="text" name="name" value="<%=profile_user.name%>" placeholder="Your name" required>
         <input type="text" name="username" value="<%=profile_user.username%>" placeholder="Your username" required>
         <input type="file" name="avatar" placeholder="Profile picture">
         <button type="submit">update</button>
-        </form>
+    </form>
     <%}else{%>
-    <p>
-        <%=profile_user.name%>
-    </p>
-    <p>
-        <%=profile_user.username%>
-    </p>
-    <%}%>
+        <p>
+            <%=user.name%>
+                <%=profile_user.name%>
+        </p>
+        <p>
+            <%=profile_user.username%>
+        </p>
+        <%}%>
