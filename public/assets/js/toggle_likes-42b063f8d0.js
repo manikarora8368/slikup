@@ -1,1 +1,34 @@
-class ToggleLike{constructor(t){this.toggler=t,this.toggleLike()}toggleLike(){$(this.toggler).click((function(t){console.log(this.toggler),t.preventDefault();let e=this;$.ajax({type:"POST",url:$(e).attr("href")}).done((function(t){let l=parseInt($(e).attr("data-likes"));console.log(l),console.log(t.data.deleted),1==t.data.deleted?l-=1:l+=1,$(e).attr("data-likes",l),$(e).html(l+" Likes")})).fail((function(t){console.log("error in completing the request")}))}))}}
+// CHANGE :: create a class to toggle likes when a link is clicked, using AJAX
+class ToggleLike {
+  constructor(toggleElement) {
+    this.toggler = toggleElement;
+    this.toggleLike();
+  }
+
+  toggleLike() {
+    $(this.toggler).click(function (e) {
+      e.preventDefault();
+      let self = this;
+
+      // this is a new way of writing ajax which you might've studied, it looks like the same as promises
+      $.ajax({
+        type: "POST",
+        url: $(self).attr("href"),
+      })
+        .done(function (data) {
+          let likesCount = parseInt($(self).attr("data-likes"));
+          if (data.data.deleted == true) {
+            likesCount -= 1;
+          } else {
+            likesCount += 1;
+          }
+
+          $(self).attr("data-likes", likesCount);
+          $(self).html(`${likesCount} Likes`);
+        })
+        .fail(function (errData) {
+          console.log("error in completing the request");
+        });
+    });
+  }
+}

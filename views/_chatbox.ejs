@@ -1,17 +1,21 @@
-<link rel="stylesheet" href="<%=assetPath('css/chatbox.css')%>">
-<%if(locals.user){%>
+<% if (locals.user){ %>
     <div id="user-chat-box">
-    <ul id="chat-messages-lists">
-        <li class="other-message">
-            <span>Other message</span>
-        </li>
-        <li class="self-message">
-            <span>Self message</span>
-        </li>
-    </ul>
-    <div id="chat-message-input-container">
-        <input type="text" placeholder="Type message here" id="chat-message-input">
-        <button type="submit" id="send-message">Send</button>
+        <ul id="chat-messages-list">
+            <li class="other-message">
+                <span>Other Message</span>
+            </li>
+            <li class="self-message">
+                <span>
+                    Self Message
+                </span>
+
+            </li>
+
+        </ul>
+        <div id="chat-message-input-container">
+            <input id="chat-message-input" placeholder="Type message here">
+            <button id="send-message">Send</button>
+        </div>
+
     </div>
-    </div>
-<%}%>
+    <% } %>

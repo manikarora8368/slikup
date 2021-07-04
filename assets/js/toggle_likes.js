@@ -7,7 +7,6 @@ class ToggleLike {
 
   toggleLike() {
     $(this.toggler).click(function (e) {
-      console.log(this.toggler);
       e.preventDefault();
       let self = this;
 
@@ -18,8 +17,6 @@ class ToggleLike {
       })
         .done(function (data) {
           let likesCount = parseInt($(self).attr("data-likes"));
-          console.log(likesCount);
-          console.log(data.data.deleted);
           if (data.data.deleted == true) {
             likesCount -= 1;
           } else {

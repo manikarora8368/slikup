@@ -29,7 +29,6 @@ module.exports.addComment = async function (req, res) {
         user: req.user._id,
       });
       post.comments.push(comment);
-      console.log("hello");
       post.save();
       comment = await comment.populate("user", "name username").execPopulate();
       commentsMailer.newComment(comment);
@@ -39,6 +38,15 @@ module.exports.addComment = async function (req, res) {
       //     }
       //     console.log(job.id);
       // });
+      if (req.xhr){
+                
+                return res.status(200).json({
+                    data: {
+                        comment: comment
+                    },
+                    message: "Post created!"
+                });
+            }
       return res.redirect("back");
     }
   } catch (err) {
@@ -54,12 +62,16 @@ module.exports.destroy = async function (req, res) {
         comment.remove();
         Post.findByIdAndUpdate(
           postId,
-          { $pull: { comments: req.params.id } },
-          function (err, post) {
-            return res.redirect("back");
-          }
-        );
+          { $pull: { comments: req.params.id } });
         Like.deleteMany({ likeable: comment._id, onmodel: "Comment" });
+        if (req.xhr){
+                return res.status(200).json({
+                    data: {
+                        comment_id: req.params.id
+                    },
+                    message: "Post deleted"
+                });
+            }
       }
     }
   });

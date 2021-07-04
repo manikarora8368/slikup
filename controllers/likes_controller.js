@@ -37,13 +37,14 @@ module.exports.toggleLike =async function(req,res){
             likeable.likes.push(newLike._id);
             likeable.save();
         }
-        return res.redirect('back');
-        //  res.json(200 ,{
-        //     message: "request successful",
-        //     data:{
-        //         deleted: deleted
-        //     }
-        // })
+       if(req.xhr){
+         res.json(200 ,{
+            message: "request successful",
+            data:{
+                deleted: deleted
+            }
+        })
+        }
 
     }catch(err){
         console.log(err);

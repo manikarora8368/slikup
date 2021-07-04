@@ -26,11 +26,11 @@ module.exports.createPost =async function(req , res){
         content: req.body.content,
         user: req.user._id
     });
-
+    let post =await Post.findById(create._id).populate('user');
     if(req.xhr){
         return res.status(200).json({
             data: {
-                post: create
+                post: post
             },
             message: "post created successfuly"
         })
@@ -90,8 +90,6 @@ module.exports.destroy = async function(req, res){
             
             await Like.deleteMany({likeable: post , onModel: 'Post'});
             await Like.deleteMany({_id:{$in: post.comments}});
-            console.log({$in: post.comments});
-            console.log(post.comments);
             post.remove();
             await Comment.deleteMany({post: req.params.id});
             if (req.xhr){

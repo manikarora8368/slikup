@@ -4,13 +4,3 @@
 #user-friends {
   margin: 2rem;
 }
-#chatbox {
-  margin: 2rem;
-  position: fixed;
-  border: 2px dashed black;
-  bottom: 0;
-  right: 0;
-  li:nth-child(2n) {
-    text-align: right;
-  }
-}
